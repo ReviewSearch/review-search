@@ -14,10 +14,11 @@ import wooteco.review.properties.GithubProperty;
 public class GithubClient {
 	private static final String GITHUB_V3_MIME_TYPE = "application/vnd.github.v3+json";
 	private static final String GITHUB_API_BASE_URL = "https://api.github.com";
+	private static final String PATH_FORMAT = "repos/woowacourse/%s/pulls/%d/comments";
 
 	private final WebClient webClient;
 
-	public GithubClient(GithubProperty githubProperty) {
+	public GithubClient(final GithubProperty githubProperty) {
 		this.webClient = WebClient.builder()
 			.baseUrl(GITHUB_API_BASE_URL)
 			.defaultHeader(HttpHeaders.CONTENT_TYPE, GITHUB_V3_MIME_TYPE)
@@ -26,9 +27,9 @@ public class GithubClient {
 			.build();
 	}
 
-	public List<Comment> listCommentsBy() {
+	public List<Comment> listCommentsBy(final String repositoryName, final int pullId) {
 		return webClient.get()
-			.uri("repos/woowacourse/java-blackjack/pulls/11/comments")
+			.uri(String.format(PATH_FORMAT, repositoryName, pullId))
 			.retrieve()
 			.bodyToFlux(Comment.class)
 			.collectList()

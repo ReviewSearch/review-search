@@ -17,6 +17,6 @@ class GithubClientTest {
 
 	@Test
 	void listCommentBy_ShouldReturnSizeOfComments() {
-		assertThat(githubClient.listCommentsBy()).hasSize(8);
+		assertThat(githubClient.listCommentsBy("java-blackjack", 11)).hasSize(8);
 	}
 }
