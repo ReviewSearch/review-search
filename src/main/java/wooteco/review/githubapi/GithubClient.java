@@ -1,10 +1,13 @@
 package wooteco.review.githubapi;
 
+import java.util.List;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import wooteco.review.domain.Comment;
 import wooteco.review.properties.GithubProperty;
 
 @Service
@@ -21,5 +24,14 @@ public class GithubClient {
 			.filter(ExchangeFilterFunctions.basicAuthentication(
 				githubProperty.getClientId(), githubProperty.getClientSecret()))
 			.build();
+	}
+
+	public List<Comment> listCommentsBy() {
+		return webClient.get()
+			.uri("repos/woowacourse/java-blackjack/pulls/11/comments")
+			.retrieve()
+			.bodyToFlux(Comment.class)
+			.collectList()
+			.block();
 	}
 }
