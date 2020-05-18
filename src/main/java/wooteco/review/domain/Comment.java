@@ -1,18 +1,26 @@
 package wooteco.review.domain;
 
+import java.time.LocalDateTime;
+
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(value = PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Comment {
+	@NotNull
 	private String diffHunk;
 
 	@JsonProperty("body")
+	@NotNull
 	private String content;
 
-	private String updatedAt;
+	@NotNull
+	private LocalDateTime updatedAt;
 
+	@NotNull
 	private String htmlUrl;
 
 	public String getDiffHunk() {
@@ -31,11 +39,11 @@ public class Comment {
 		this.content = content;
 	}
 
-	public String getUpdatedAt() {
+	public LocalDateTime getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(String updatedAt) {
+	public void setUpdatedAt(final LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 
