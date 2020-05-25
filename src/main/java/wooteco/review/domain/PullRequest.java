@@ -1,37 +1,24 @@
 package wooteco.review.domain;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-
-/**
- *    Pull Request 클래스입니다.
- *
- *    @author HyungJu An, Seyun Kim, Jinju Moon
- */
-@JsonNaming(value = PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class PullRequest {
-	@NotNull
-	private Integer number;
-	@NotNull
-	private LocalDateTime updatedAt;
+    @Id
+    private final Long id;
+    private final LocalDateTime updatedAt;
+    private final Set<Comment> comments;
 
-	public Integer getNumber() {
-		return number;
-	}
+    PullRequest(final Long id, final LocalDateTime updatedAt, final Set<Comment> comments) {
+        this.id = id;
+        this.updatedAt = updatedAt;
+        this.comments = comments;
+    }
 
-	public void setNumber(final Integer number) {
-		this.number = number;
-	}
-
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(final LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
+    public static PullRequest of(Long id, LocalDateTime updatedAt) {
+        return new PullRequest(id, updatedAt, new HashSet<>());
+    }
 }

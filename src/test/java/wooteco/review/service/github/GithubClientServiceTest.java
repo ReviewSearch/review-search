@@ -1,4 +1,4 @@
-package wooteco.review.githubapi;
+package wooteco.review.service.github;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -10,18 +10,18 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class GithubClientTest {
+class GithubClientServiceTest {
 
 	@Autowired
-	GithubClient githubClient;
+	GithubClientService githubClientService;
 
 	@Test
 	void requestCommentBy_ShouldReturnSizeOfComments() {
-		assertThat(githubClient.requestCommentsBy("java-blackjack", 11)).hasSize(8);
+		assertThat(githubClientService.requestCommentsBy("java-blackjack", 11)).hasSize(8);
 	}
 
 	@Test
 	void requestPullRequestBy_ShouldReturnSizeOfPullRequest() {
-		assertThat(githubClient.requestPullRequestsBy("java-blackjack")).hasSize(108);
+		assertThat(githubClientService.requestPullRequestsBy("java-blackjack")).hasSize(108);
 	}
 }

@@ -2,56 +2,29 @@ package wooteco.review.domain;
 
 import java.time.LocalDateTime;
 
-import javax.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-
-@JsonNaming(value = PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Comment {
-	@NotNull
-	private String diffHunk;
+    @Id
+    private final Long id;
+    private final String diffHunk;
+    private final String content;
+    private final LocalDateTime updatedAt;
+    private final String htmlUrl;
 
-	@JsonProperty("body")
-	@NotNull
-	private String content;
+    Comment(Long id, String diffHunk, String content, LocalDateTime updatedAt, String htmlUrl) {
+        this.id = id;
+        this.diffHunk = diffHunk;
+        this.content = content;
+        this.updatedAt = updatedAt;
+        this.htmlUrl = htmlUrl;
+    }
 
-	@NotNull
-	private LocalDateTime updatedAt;
+    public static Comment of(String diffHunk, String content, LocalDateTime updatedAt, String htmlUrl) {
+        return new Comment(null, diffHunk, content, updatedAt, htmlUrl);
+    }
 
-	@NotNull
-	private String htmlUrl;
-
-	public String getDiffHunk() {
-		return diffHunk;
-	}
-
-	public void setDiffHunk(String diffHunk) {
-		this.diffHunk = diffHunk;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(final LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
-	public String getHtmlUrl() {
-		return htmlUrl;
-	}
-
-	public void setHtmlUrl(String htmlUrl) {
-		this.htmlUrl = htmlUrl;
-	}
+    public Comment withId(Long id){
+        return new Comment(id, this.diffHunk, this.content, this.updatedAt, this.htmlUrl);
+    }
 }

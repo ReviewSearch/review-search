@@ -1,4 +1,4 @@
-package wooteco.review.githubapi;
+package wooteco.review.service.github;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,19 +12,19 @@ import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import reactor.core.publisher.Mono;
-import wooteco.review.domain.Comment;
-import wooteco.review.domain.PullRequest;
+import wooteco.review.service.github.dto.CommentDto;
+import wooteco.review.service.github.dto.PullRequestDto;
 import wooteco.review.properties.GithubProperty;
 
 @Service
-public class GithubClient {
+public class GithubClientService {
 	private static final String GITHUB_V3_MIME_TYPE = "application/vnd.github.v3+json";
 	private static final String GITHUB_API_BASE_URL = "https://api.github.com";
 	private static final String TEAM_PATH = "repos/woowacourse/";
 
 	private final WebClient webClient;
 
-	public GithubClient(final GithubProperty githubProperty) {
+	public GithubClientService(final GithubProperty githubProperty) {
 		this.webClient = WebClient.builder()
 			.baseUrl(GITHUB_API_BASE_URL)
 			.defaultHeader(HttpHeaders.CONTENT_TYPE, GITHUB_V3_MIME_TYPE)
@@ -33,28 +33,28 @@ public class GithubClient {
 			.build();
 	}
 
-	public List<PullRequest> requestPullRequestsBy(final String repositoryName) {
+	public List<PullRequestDto> requestPullRequestsBy(final String repositoryName) {
 		Mono<ClientResponse> clientResponse = webClient.get()
 			.uri(TEAM_PATH + repositoryName + "/pulls?state=all")
 			.exchange();
 		final AtomicInteger lastPage = findLastPage(clientResponse);
-		List<PullRequest> pullRequests = new ArrayList<>(
+		List<PullRequestDto> pullRequestDtos = new ArrayList<>(
 			Objects.requireNonNull(
-				clientResponse.flatMapMany(response -> response.bodyToFlux(PullRequest.class))
+				clientResponse.flatMapMany(response -> response.bodyToFlux(PullRequestDto.class))
 					.collectList()
 					.block()
 			)
 		);
 
 		for (int i = 2; i <= lastPage.get(); i++) {
-			pullRequests.addAll(Objects.requireNonNull(webClient.get()
+			pullRequestDtos.addAll(Objects.requireNonNull(webClient.get()
 				.uri(TEAM_PATH + repositoryName + "/pulls?state=all" + "&page=" + i)
 				.retrieve()
-				.bodyToFlux(PullRequest.class)
+				.bodyToFlux(PullRequestDto.class)
 				.collectList()
 				.block()));
 		}
-		return pullRequests;
+		return pullRequestDtos;
 	}
 
 	private AtomicInteger findLastPage(final Mono<ClientResponse> clientResponse) {
@@ -69,11 +69,11 @@ public class GithubClient {
 		return lastPage;
 	}
 
-	public List<Comment> requestCommentsBy(final String repositoryName, final int pullId) {
+	public List<CommentDto> requestCommentsBy(final String repositoryName, final int pullId) {
 		return webClient.get()
 			.uri(TEAM_PATH + repositoryName + "/pulls/" + pullId + "/comments")
 			.retrieve()
-			.bodyToFlux(Comment.class)
+			.bodyToFlux(CommentDto.class)
 			.collectList()
 			.block();
 	}
