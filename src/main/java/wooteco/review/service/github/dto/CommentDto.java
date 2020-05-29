@@ -1,6 +1,7 @@
 package wooteco.review.service.github.dto;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
@@ -11,6 +12,12 @@ import wooteco.review.domain.Comment;
 
 @JsonNaming(value = PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class CommentDto {
+	@NotNull
+	private Long id;
+
+	@NotNull
+	private String login;
+
 	@NotNull
 	private String diffHunk;
 
@@ -25,7 +32,28 @@ public class CommentDto {
 	private String htmlUrl;
 
 	public Comment toComment() {
-		return Comment.of(diffHunk, content, updatedAt, htmlUrl);
+		return Comment.of(id, login, diffHunk, content, updatedAt, htmlUrl);
+	}
+
+	@JsonProperty("user")
+	public void unpackLogin(Map<String, String> user) {
+		login = user.get("login");
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 	public String getDiffHunk() {

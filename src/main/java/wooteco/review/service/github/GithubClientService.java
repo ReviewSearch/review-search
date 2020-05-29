@@ -12,9 +12,9 @@ import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import reactor.core.publisher.Mono;
+import wooteco.review.properties.GithubProperty;
 import wooteco.review.service.github.dto.CommentDto;
 import wooteco.review.service.github.dto.PullRequestDto;
-import wooteco.review.properties.GithubProperty;
 
 @Service
 public class GithubClientService {
@@ -69,7 +69,7 @@ public class GithubClientService {
 		return lastPage;
 	}
 
-	public List<CommentDto> requestCommentsBy(final String repositoryName, final int pullId) {
+	public List<CommentDto> requestCommentsBy(final String repositoryName, final Long pullId) {
 		return webClient.get()
 			.uri(TEAM_PATH + repositoryName + "/pulls/" + pullId + "/comments")
 			.retrieve()

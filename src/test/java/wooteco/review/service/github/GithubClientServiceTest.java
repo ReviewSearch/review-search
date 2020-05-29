@@ -11,13 +11,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class GithubClientServiceTest {
-
 	@Autowired
 	GithubClientService githubClientService;
 
 	@Test
 	void requestCommentBy_ShouldReturnSizeOfComments() {
-		assertThat(githubClientService.requestCommentsBy("java-blackjack", 11)).hasSize(8);
+		assertThat(githubClientService.requestCommentsBy("java-blackjack", 11L)).hasSize(8);
 	}
 
 	@Test

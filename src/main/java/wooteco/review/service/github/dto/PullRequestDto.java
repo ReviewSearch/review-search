@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import wooteco.review.domain.PullRequest;
@@ -16,18 +15,18 @@ import wooteco.review.domain.PullRequest;
  */
 @JsonNaming(value = PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class PullRequestDto {
-	@JsonProperty("name")
 	@NotNull
-	private Long id;
+	private Long number;
+
 	@NotNull
 	private LocalDateTime updatedAt;
 
-	public PullRequest of(){
-		return PullRequest.of(id, updatedAt);
+	public PullRequest toPullRequest() {
+		return PullRequest.of(number, updatedAt);
 	}
 
-	public Long getId() {
-		return id;
+	public Long getNumber() {
+		return number;
 	}
 
 	public LocalDateTime getUpdatedAt() {

@@ -7,20 +7,20 @@ create table if not exists REPOSITORY
 
 create table if not exists PULL_REQUEST
 (
-    id bigint not null,
-    repository bigint not null,
-    name varchar(255) not null,
+    number bigint not null,
+    github_repo bigint not null,
     updated_at datetime,
-    primary key(id)
+    primary key(number)
 );
 
 create table if not exists COMMENT
 (
-    id bigint auto_increment not null,
+    id bigint not null,
     pull_request bigint not null,
-    diffHunk varchar(255) not null,
-    content varchar(255) not null,
-    htmlUrl varchar(255) not null,
+    diff_hunk text not null,
+    login varchar(255) not null,
+    content text not null,
     updated_at datetime,
+    html_url varchar(255) not null,
     primary key(id)
 );
