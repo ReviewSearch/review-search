@@ -3,6 +3,7 @@ package wooteco.review.service.github;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.http.HttpHeaders;
@@ -34,10 +35,15 @@ public class GithubClientService {
 	}
 
 	public List<PullRequestDto> requestPullRequestsBy(final String repositoryName) {
+		if (!existRepoBy(repositoryName)) {
+			throw new IllegalArgumentException("유효하지 않은 RepoName: " + repositoryName);
+		}
+
 		Mono<ClientResponse> clientResponse = webClient.get()
 			.uri(TEAM_PATH + repositoryName + "/pulls?state=all")
 			.exchange();
 		final AtomicInteger lastPage = findLastPage(clientResponse);
+
 		List<PullRequestDto> pullRequestDtos = new ArrayList<>(
 			Objects.requireNonNull(
 				clientResponse.flatMapMany(response -> response.bodyToFlux(PullRequestDto.class))
@@ -53,6 +59,7 @@ public class GithubClientService {
 				.bodyToFlux(PullRequestDto.class)
 				.collectList()
 				.block()));
+
 		}
 		return pullRequestDtos;
 	}
@@ -76,5 +83,20 @@ public class GithubClientService {
 			.bodyToFlux(CommentDto.class)
 			.collectList()
 			.block();
+	}
+
+	public boolean existRepoBy(final String repositoryName) {
+		final AtomicBoolean exist = new AtomicBoolean(true);
+		webClient.get()
+			.uri(TEAM_PATH + repositoryName)
+			.exchange()
+			.flatMap(it -> {
+				if (it.statusCode().isError()) {
+					exist.set(false);
+				}
+				return it.bodyToMono(String.class);
+			})
+			.block();
+		return exist.get();
 	}
 }

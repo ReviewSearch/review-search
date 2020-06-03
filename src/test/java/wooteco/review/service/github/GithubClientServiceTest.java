@@ -23,4 +23,16 @@ class GithubClientServiceTest {
 	void requestPullRequestBy_ShouldReturnSizeOfPullRequest() {
 		assertThat(githubClientService.requestPullRequestsBy("java-blackjack")).hasSize(108);
 	}
+
+	@Test
+	void requestNonExistentGithubRepoBy_ShouldReturnNotFoundException() {
+		assertThatThrownBy(() -> githubClientService.requestPullRequestsBy("java"))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessageContaining("유효");
+	}
+
+	@Test
+	void existRepoBy_WhenNotFoundRepo_ShouldReturnFalse() {
+		assertThat(githubClientService.existRepoBy("java")).isFalse();
+	}
 }
