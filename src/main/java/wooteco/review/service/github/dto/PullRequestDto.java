@@ -1,12 +1,16 @@
 package wooteco.review.service.github.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import wooteco.review.domain.PullRequest;
+import wooteco.review.service.github.State;
 
 /**
  *    Pull Request 클래스입니다.
@@ -15,21 +19,29 @@ import wooteco.review.domain.PullRequest;
  */
 @JsonNaming(value = PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class PullRequestDto {
-	@NotNull
-	private Long number;
+    @NotNull
+    private Long number;
 
-	@NotNull
-	private LocalDateTime updatedAt;
+    @JsonProperty("state")
+    @NotNull
+    private State state;
 
-	public PullRequest toPullRequest() {
-		return PullRequest.of(number, updatedAt);
-	}
+    @NotNull
+    private LocalDateTime updatedAt;
 
-	public Long getNumber() {
-		return number;
-	}
+    public PullRequest toPullRequest() {
+        return PullRequest.of(number, state, updatedAt);
+    }
 
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
-	}
+    public Long getNumber() {
+        return number;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public State getState() {
+        return state;
+    }
 }

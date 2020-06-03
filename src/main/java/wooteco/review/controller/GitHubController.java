@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import wooteco.review.domain.GithubRepo;
 import wooteco.review.domain.PullRequest;
 import wooteco.review.service.RepoService;
 import wooteco.review.service.github.GithubClientService;
+import wooteco.review.service.github.State;
 import wooteco.review.service.github.dto.CommentDto;
 import wooteco.review.service.github.dto.PullRequestDto;
 
@@ -35,7 +37,7 @@ public class GitHubController {
     @PostMapping("/repos")
     public ResponseEntity<Void> createRepo(@RequestBody Map<String, String> params) {
         String name = params.get("name");
-        List<PullRequestDto> pullRequestDtos = githubClientService.requestPullRequestsBy(name);
+        List<PullRequestDto> pullRequestDtos = githubClientService.requestPullRequestsBy(name, State.ALL);
         Set<PullRequest> pullRequests = new HashSet<>();
 
         for (PullRequestDto pullRequestDto : pullRequestDtos) {
@@ -55,6 +57,15 @@ public class GitHubController {
 
         return ResponseEntity
             .created(URI.create("/repos")) // TODO: 2020-05-25 id 추가하기
+            .build();
+    }
+
+    @PutMapping("/repos")
+    public ResponseEntity<Void> updatePullRequest(@RequestBody Map<String, String> params) {
+        String name = params.get("name");
+        githubClientService.updatePullRequest(name);
+        return ResponseEntity
+            .ok()
             .build();
     }
 }

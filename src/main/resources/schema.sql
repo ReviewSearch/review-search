@@ -9,6 +9,7 @@ create table if not exists PULL_REQUEST
 (
     number bigint not null,
     github_repo bigint not null,
+    state varchar(255) not null,
     updated_at datetime,
     primary key(number)
 );
