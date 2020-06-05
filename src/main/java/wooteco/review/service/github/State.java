@@ -1,5 +1,12 @@
 package wooteco.review.service.github;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public enum State {
-	ALL, OPEN, CLOSED;
+	@JsonProperty("all")
+	ALL,
+	@JsonProperty("open")
+	OPEN(),
+	@JsonProperty("closed")
+	CLOSED();
 }

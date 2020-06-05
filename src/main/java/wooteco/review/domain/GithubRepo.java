@@ -30,4 +30,8 @@ public class GithubRepo {
 	public GithubRepo withPullRequests(final Set<PullRequest> pullRequests) {
 		return new GithubRepo(this.id, this.name, pullRequests);
 	}
+
+	public Long getId() {
+		return id;
+	}
 }

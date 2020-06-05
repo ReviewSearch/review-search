@@ -13,7 +13,7 @@ public class RepoService {
 		this.repoRepository = repoRepository;
 	}
 
-	public void createRepo(GithubRepo githubRepo) {
-		repoRepository.save(githubRepo);
+	public GithubRepo createRepo(GithubRepo githubRepo) {
+		return repoRepository.save(githubRepo);
 	}
 }

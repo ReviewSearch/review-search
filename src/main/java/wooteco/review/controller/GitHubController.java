@@ -53,10 +53,10 @@ public class GitHubController {
 
 		GithubRepo githubRepo = GithubRepo.of(name);
 
-		repoService.createRepo(githubRepo.withPullRequests(pullRequests));
+        GithubRepo persistanceRepo = repoService.createRepo(githubRepo.withPullRequests(pullRequests));
 
-		return ResponseEntity
-			.created(URI.create("/repos")) // TODO: 2020-05-25 id 추가하기
+        return ResponseEntity
+			.created(URI.create("/repos/" + persistanceRepo.getId()))
 			.build();
 	}
 

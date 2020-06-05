@@ -48,7 +48,7 @@ public class GithubClientService {
 		}
 
 		Mono<ClientResponse> clientResponse = webClient.get()
-			.uri(TEAM_PATH + repositoryName + "/pulls?state=" + state.name())
+			.uri(TEAM_PATH + repositoryName + "/pulls?state=" + state.name().toLowerCase())
 			.exchange();
 		final AtomicInteger lastPage = findLastPage(clientResponse);
 
@@ -62,7 +62,7 @@ public class GithubClientService {
 
 		for (int i = 2; i <= lastPage.get(); i++) {
 			pullRequestDtos.addAll(Objects.requireNonNull(webClient.get()
-				.uri(TEAM_PATH + repositoryName + "/pulls?state=all" + "&page=" + i)
+				.uri(TEAM_PATH + repositoryName + "/pulls?state=" + state.name().toLowerCase() + "&page=" + i)
 				.retrieve()
 				.bodyToFlux(PullRequestDto.class)
 				.collectList()

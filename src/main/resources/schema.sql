@@ -18,7 +18,6 @@ create table if not exists COMMENT
 (
     id bigint not null,
     pull_request bigint not null,
-    diff_hunk text not null,
     login varchar(255) not null,
     content text not null,
     updated_at datetime,

@@ -18,9 +18,6 @@ public class CommentDto {
 	@NotNull
 	private String login;
 
-	@NotNull
-	private String diffHunk;
-
 	@JsonProperty("body")
 	@NotNull
 	private String content;
@@ -32,7 +29,7 @@ public class CommentDto {
 	private String htmlUrl;
 
 	public Comment toComment() {
-		return Comment.of(id, login, diffHunk, content, updatedAt, htmlUrl);
+		return Comment.of(id, login, content, updatedAt, htmlUrl);
 	}
 
 	@JsonProperty("user")
@@ -54,14 +51,6 @@ public class CommentDto {
 
 	public void setLogin(String login) {
 		this.login = login;
-	}
-
-	public String getDiffHunk() {
-		return diffHunk;
-	}
-
-	public void setDiffHunk(String diffHunk) {
-		this.diffHunk = diffHunk;
 	}
 
 	public String getContent() {
