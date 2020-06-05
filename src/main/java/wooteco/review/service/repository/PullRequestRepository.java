@@ -6,5 +6,5 @@ import wooteco.review.domain.PullRequest;
 import wooteco.review.service.github.State;
 
 public interface PullRequestRepository extends CrudRepository<PullRequest, Long> {
-    long countByState(State state);
+	long countByState(State state);
 }

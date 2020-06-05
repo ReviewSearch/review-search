@@ -26,46 +26,46 @@ import wooteco.review.service.github.dto.PullRequestDto;
 @RequestMapping("/api/github")
 @RestController
 public class GitHubController {
-    private final GithubClientService githubClientService;
-    private final RepoService repoService;
+	private final GithubClientService githubClientService;
+	private final RepoService repoService;
 
-    public GitHubController(GithubClientService githubClientService, RepoService repoService) {
-        this.githubClientService = githubClientService;
-        this.repoService = repoService;
-    }
+	public GitHubController(GithubClientService githubClientService, RepoService repoService) {
+		this.githubClientService = githubClientService;
+		this.repoService = repoService;
+	}
 
-    @PostMapping("/repos")
-    public ResponseEntity<Void> createRepo(@RequestBody Map<String, String> params) {
-        String name = params.get("name");
-        List<PullRequestDto> pullRequestDtos = githubClientService.requestPullRequestsBy(name, State.ALL);
-        Set<PullRequest> pullRequests = new HashSet<>();
+	@PostMapping("/repos")
+	public ResponseEntity<Void> createRepo(@RequestBody Map<String, String> params) {
+		String name = params.get("name");
+		List<PullRequestDto> pullRequestDtos = githubClientService.requestPullRequestsBy(name, State.ALL);
+		Set<PullRequest> pullRequests = new HashSet<>();
 
-        for (PullRequestDto pullRequestDto : pullRequestDtos) {
-            PullRequest pullRequest = pullRequestDto.toPullRequest();
+		for (PullRequestDto pullRequestDto : pullRequestDtos) {
+			PullRequest pullRequest = pullRequestDto.toPullRequest();
 
-            List<CommentDto> commentDtos = githubClientService.requestCommentsBy(name, pullRequestDto.getNumber());
-            Set<Comment> comments = commentDtos.stream()
-                .map(CommentDto::toComment)
-                .collect(Collectors.toSet());
+			List<CommentDto> commentDtos = githubClientService.requestCommentsBy(name, pullRequestDto.getNumber());
+			Set<Comment> comments = commentDtos.stream()
+				.map(CommentDto::toComment)
+				.collect(Collectors.toSet());
 
-            pullRequests.add(pullRequest.withComments(comments));
-        }
+			pullRequests.add(pullRequest.withComments(comments));
+		}
 
-        GithubRepo githubRepo = GithubRepo.of(name);
+		GithubRepo githubRepo = GithubRepo.of(name);
 
-        repoService.createRepo(githubRepo.withPullRequests(pullRequests));
+		repoService.createRepo(githubRepo.withPullRequests(pullRequests));
 
-        return ResponseEntity
-            .created(URI.create("/repos")) // TODO: 2020-05-25 id 추가하기
-            .build();
-    }
+		return ResponseEntity
+			.created(URI.create("/repos")) // TODO: 2020-05-25 id 추가하기
+			.build();
+	}
 
-    @PutMapping("/repos")
-    public ResponseEntity<Void> updatePullRequest(@RequestBody Map<String, String> params) {
-        String name = params.get("name");
-        githubClientService.updatePullRequest(name);
-        return ResponseEntity
-            .ok()
-            .build();
-    }
+	@PutMapping("/repos")
+	public ResponseEntity<Void> updatePullRequest(@RequestBody Map<String, String> params) {
+		String name = params.get("name");
+		githubClientService.updatePullRequest(name);
+		return ResponseEntity
+			.ok()
+			.build();
+	}
 }

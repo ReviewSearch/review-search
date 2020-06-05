@@ -1,8 +1,6 @@
 package wooteco.review.service.github.dto;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 
@@ -19,29 +17,29 @@ import wooteco.review.service.github.State;
  */
 @JsonNaming(value = PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class PullRequestDto {
-    @NotNull
-    private Long number;
+	@NotNull
+	private Long number;
 
-    @JsonProperty("state")
-    @NotNull
-    private State state;
+	@JsonProperty("state")
+	@NotNull
+	private State state;
 
-    @NotNull
-    private LocalDateTime updatedAt;
+	@NotNull
+	private LocalDateTime updatedAt;
 
-    public PullRequest toPullRequest() {
-        return PullRequest.of(number, state, updatedAt);
-    }
+	public PullRequest toPullRequest() {
+		return PullRequest.of(number, state, updatedAt);
+	}
 
-    public Long getNumber() {
-        return number;
-    }
+	public Long getNumber() {
+		return number;
+	}
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
 
-    public State getState() {
-        return state;
-    }
+	public State getState() {
+		return state;
+	}
 }

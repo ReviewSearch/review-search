@@ -10,9 +10,9 @@ import org.springframework.data.relational.core.mapping.Column;
 import wooteco.review.service.github.State;
 
 public class PullRequest {
-    @Id
+	@Id
 	private final Long number;
-    private final LocalDateTime updatedAt;
+	private final LocalDateTime updatedAt;
 	private final State state;
 	@Column("PULL_REQUEST")
 	private final Set<Comment> comments;
@@ -20,10 +20,10 @@ public class PullRequest {
 	PullRequest(final Long number, final LocalDateTime updatedAt, State state,
 		final Set<Comment> comments) {
 		this.number = number;
-        this.updatedAt = updatedAt;
+		this.updatedAt = updatedAt;
 		this.state = state;
 		this.comments = comments;
-    }
+	}
 
 	public static PullRequest of(final Long number, State state, final LocalDateTime updatedAt) {
 		return new PullRequest(number, updatedAt, state, new HashSet<>());
@@ -35,5 +35,5 @@ public class PullRequest {
 
 	public PullRequest withComments(final Set<Comment> comments) {
 		return new PullRequest(this.number, this.updatedAt, state, comments);
-    }
+	}
 }
