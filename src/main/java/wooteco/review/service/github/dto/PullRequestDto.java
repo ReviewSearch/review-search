@@ -18,6 +18,9 @@ import wooteco.review.service.github.State;
 @JsonNaming(value = PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class PullRequestDto {
 	@NotNull
+	private Long id;
+
+	@NotNull
 	private Long number;
 
 	@JsonProperty("state")
@@ -28,7 +31,7 @@ public class PullRequestDto {
 	private LocalDateTime updatedAt;
 
 	public PullRequest toPullRequest() {
-		return PullRequest.of(number, state, updatedAt);
+		return PullRequest.of(id, number, state, updatedAt);
 	}
 
 	public Long getNumber() {
@@ -41,5 +44,9 @@ public class PullRequestDto {
 
 	public State getState() {
 		return state;
+	}
+
+	public Long getId() {
+		return id;
 	}
 }
