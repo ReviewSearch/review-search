@@ -32,7 +32,7 @@ class GitHubControllerTest {
 	@Test
 	void createRepo() {
 		Map<String, String> params = new HashMap<>();
-		params.put("name", "java-blackjack");
+		params.put("name", "java-chess");
 
 		given()
 			.body(params)
