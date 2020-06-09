@@ -29,40 +29,39 @@ public class GitHubController {
 	private final GithubClientService githubClientService;
 	private final RepoService repoService;
 
-	public GitHubController(GithubClientService githubClientService, RepoService repoService) {
+	public GitHubController(final GithubClientService githubClientService, final RepoService repoService) {
 		this.githubClientService = githubClientService;
 		this.repoService = repoService;
 	}
 
 	@PostMapping("/repos")
 	public ResponseEntity<Void> createRepo(@RequestBody Map<String, String> params) {
-		String name = params.get("name");
-		List<PullRequestDto> pullRequestDtos = githubClientService.requestPullRequestsBy(name, State.ALL);
-		Set<PullRequest> pullRequests = new HashSet<>();
+		final String name = params.get("name");
+		final List<PullRequestDto> pullRequestDtos = githubClientService.requestPullRequestsBy(name, State.ALL);
+		final Set<PullRequest> pullRequests = new HashSet<>();
 
-		for (PullRequestDto pullRequestDto : pullRequestDtos) {
-			PullRequest pullRequest = pullRequestDto.toPullRequest();
-
-			List<CommentDto> commentDtos = githubClientService.requestCommentsBy(name, pullRequestDto.getNumber());
-			Set<Comment> comments = commentDtos.stream()
+		for (final PullRequestDto pullRequestDto : pullRequestDtos) {
+			final PullRequest pullRequest = pullRequestDto.toPullRequest();
+			final List<CommentDto> commentDtos = githubClientService.requestCommentsBy(name,
+				pullRequestDto.getNumber());
+			final Set<Comment> comments = commentDtos.stream()
 				.map(CommentDto::toComment)
 				.collect(Collectors.toSet());
 
 			pullRequests.add(pullRequest.withComments(comments));
 		}
 
-		GithubRepo githubRepo = GithubRepo.of(name);
+		final GithubRepo githubRepo = GithubRepo.of(name);
+		final GithubRepo persistanceRepo = repoService.createRepo(githubRepo.withPullRequests(pullRequests));
 
-        GithubRepo persistanceRepo = repoService.createRepo(githubRepo.withPullRequests(pullRequests));
-
-        return ResponseEntity
+		return ResponseEntity
 			.created(URI.create("/repos/" + persistanceRepo.getId()))
 			.build();
 	}
 
 	@PutMapping("/repos")
 	public ResponseEntity<Void> updatePullRequest(@RequestBody Map<String, String> params) {
-		String name = params.get("name");
+		final String name = params.get("name");
 		githubClientService.updatePullRequest(name);
 		return ResponseEntity
 			.ok()

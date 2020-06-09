@@ -8,7 +8,7 @@ public class KeywordDto {
 	@NotNull
 	private String keyword;
 
-	public KeywordDto(String keyword) {
+	public KeywordDto(final String keyword) {
 		this.keyword = keyword;
 	}
 

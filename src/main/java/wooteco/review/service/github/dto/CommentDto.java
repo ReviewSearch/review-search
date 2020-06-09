@@ -33,7 +33,7 @@ public class CommentDto {
 	}
 
 	@JsonProperty("user")
-	public void unpackLogin(Map<String, String> user) {
+	public void unpackLogin(final Map<String, String> user) {
 		login = user.get("login");
 	}
 

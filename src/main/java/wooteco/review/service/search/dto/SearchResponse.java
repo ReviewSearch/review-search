@@ -10,7 +10,8 @@ public class SearchResponse {
 	private String content;
 	private String htmlUrl;
 
-	private SearchResponse() {}
+	private SearchResponse() {
+	}
 
 	public SearchResponse(String login, String content, String htmlUrl) {
 		this.login = login;

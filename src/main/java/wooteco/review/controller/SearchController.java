@@ -22,7 +22,8 @@ public class SearchController {
 
 	@GetMapping("/api/comments")
 	public ResponseEntity<List<SearchResponse>> searchComments(@Valid KeywordDto keywordDto) {
-		List<SearchResponse> searchResponses = SearchResponse.listOf(searchService.searchCommentsBy(keywordDto.toKeyword()));
+		final List<SearchResponse> searchResponses = SearchResponse.listOf(
+			searchService.searchCommentsBy(keywordDto.toKeyword()));
 		return ResponseEntity
 			.ok()
 			.body(searchResponses);
