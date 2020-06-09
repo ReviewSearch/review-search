@@ -6,7 +6,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class MyMvcConfiguration implements WebMvcConfigurer {
-
 	@Override
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/**")

@@ -1,9 +1,10 @@
 import api from "../api/index.js"
-import {commentTemplate} from "../utils/templates.js";
+import { commentTemplate } from "../utils/templates.js";
+
+const CLICK = 'click';
 
 function Index() {
     const $submitButton = document.querySelector("#submit-button")
-
 
     const onSearchKeyword = event => {
         event.preventDefault()
@@ -11,13 +12,13 @@ function Index() {
         const keyword = document.querySelector("#keyword").value
 
         api.search.getComments(keyword)
-            .then(comments =>
+            .then(comments => {
                 $comments.innerHTML = comments.map(comment => commentTemplate(comment)).join('')
-            )
+            })
     }
 
     const initEventListener = () => {
-        $submitButton.addEventListener('click', onSearchKeyword)
+        $submitButton.addEventListener(CLICK, onSearchKeyword)
     }
 
     this.init = () => {

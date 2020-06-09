@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class PageController {
 	@GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
 	public String index() {
-		return "index.html";
+		return "index";
 	}
 }
