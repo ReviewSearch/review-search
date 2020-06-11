@@ -20,13 +20,13 @@ import wooteco.review.domain.Comment;
 import wooteco.review.domain.Keyword;
 import wooteco.review.service.repository.CommentRepository;
 
-// @ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SearchServiceTest {
 	// @formatter:off
 	private SearchService searchService;
 
-	// @Mock
+	@Mock
 	@Autowired
 	private CommentRepository commentRepository;
 
@@ -43,9 +43,9 @@ class SearchServiceTest {
 			Comment.of(2L, "sickal", "오우, 대단하네요22!", LocalDateTime.now(), "https://github.com/octocat/Hello-World/pull/1#discussion-diff-2"),
 			Comment.of(3L, "sickal", "오우, 대단하네요33!", LocalDateTime.now(), "https://github.com/octocat/Hello-World/pull/1#discussion-diff-3")
 			);
-		// when(commentRepository.findByContentContaining(anyString())).thenReturn(comments);
+		when(commentRepository.findByContentContaining(anyString())).thenReturn(comments);
 
-		List<Comment> searchedComments = searchService.searchCommentsBy(new Keyword("인터페이스"));
+		List<Comment> searchedComments = searchService.searchCommentsBy(new Keyword("오우"));
 		assertThat(searchedComments.size()).isEqualTo(3);
 	}
 	// @formatter:on

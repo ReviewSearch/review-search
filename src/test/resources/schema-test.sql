@@ -3,7 +3,7 @@ create table if not exists REPOSITORY
     id bigint auto_increment not null,
     name varchar(255) not null unique,
     primary key(id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
 create table if not exists PULL_REQUEST
 (
@@ -13,7 +13,7 @@ create table if not exists PULL_REQUEST
     state varchar(255) not null,
     updated_at datetime,
     primary key(id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
 create table if not exists COMMENT
 (
@@ -24,4 +24,4 @@ create table if not exists COMMENT
     updated_at datetime,
     html_url varchar(255) not null,
     primary key(id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);
