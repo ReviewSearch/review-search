@@ -1,5 +1,5 @@
 import api from "../api/index.js"
-import {commentTemplate} from "../utils/templates.js";
+import { commentTemplate } from "../utils/templates.js";
 
 const CLICK = 'click';
 
@@ -15,7 +15,6 @@ function Index() {
       .then(comments => {
         $comments.innerHTML = comments.map(({login, content, htmlUrl}) => {
           const markedContent = marked(content);
-          console.log(markedContent);
           return commentTemplate({login, markedContent, htmlUrl})
         }).join('')
       })
