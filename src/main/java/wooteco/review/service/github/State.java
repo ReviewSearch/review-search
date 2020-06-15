@@ -6,7 +6,7 @@ public enum State {
 	@JsonProperty("all")
 	ALL,
 	@JsonProperty("open")
-	OPEN(),
+	OPEN,
 	@JsonProperty("closed")
-	CLOSED();
+	CLOSED
 }
