@@ -1,5 +1,5 @@
 import api from "../api/index.js"
-import { commentTemplate } from "../utils/templates.js";
+import {commentTemplate} from "../utils/templates.js";
 
 const CLICK = 'click';
 
@@ -14,7 +14,14 @@ function Index() {
     api.search.getComments(keyword)
       .then(comments => {
         $comments.innerHTML = comments.map(({login, content, htmlUrl}) => {
-          const markedContent = marked(content);
+          marked.setOptions({
+            highlight: function (code, language) {
+              const validLanguage = hljs.getLanguage(language) ? language : 'plaintext';
+              return hljs.highlight(validLanguage, code).value;
+            }
+          });
+
+          const markedContent = marked(content)
           return commentTemplate({login, markedContent, htmlUrl})
         }).join('')
       })

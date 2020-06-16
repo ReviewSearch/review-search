@@ -1,0 +1,11 @@
+.card .card-body p img {
+    width: 100%;
+}
+
+.card .card-body pre {
+    text-align: left;
+}
+
+.card {
+    height: 100%;
+}
