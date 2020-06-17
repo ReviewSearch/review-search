@@ -2,10 +2,14 @@
     width: 100%;
 }
 
-.card .card-body pre {
-    text-align: left;
-}
+/*.card .card-body pre {*/
+/*    text-align: left;*/
+/*}*/
 
 .card {
     height: 100%;
+}
+
+.card .card-body .content {
+    text-align: left;
 }
