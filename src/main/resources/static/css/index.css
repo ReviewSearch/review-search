@@ -1,0 +1,27 @@
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
+
+@font-face {
+    font-family: 'BMDOHYEON';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif';
+}
+
+.navbar-brand, .btn-primary {
+    font-family: 'BMDOHYEON';
+}
+.card .card-body p img {
+    width: 100%;
+}
+
+.card {
+    height: 100%;
+}
+
+.card .card-body .content {
+    text-align: left;
+}
