@@ -34,4 +34,10 @@ public class GithubRepo {
 	public Long getId() {
 		return id;
 	}
+
+	public Set<PullRequest> getPullRequests() {
+		return pullRequests;
+	}
+
+
 }

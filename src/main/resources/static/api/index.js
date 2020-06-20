@@ -10,13 +10,20 @@ const api = (() => {
     const requestWithJsonData = (uri, config) => fetch(uri, config).then(data => data.json())
 
     const search = {
-        getComments(keyword) {
-            return requestWithJsonData(`/api/comments?keyword=${keyword}`)
+        getComments({keyword, repoName}) {
+            return requestWithJsonData(`/api/comments?keyword=${keyword}&repoName=${repoName}`)
+        }
+    }
+
+    const repos = {
+        getRepoNames() {
+            return requestWithJsonData('api/github/repo-names')
         }
     }
 
     return {
-        search
+        search,
+        repos
     }
 })()
 

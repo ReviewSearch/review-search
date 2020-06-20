@@ -5,13 +5,19 @@ const CLICK = 'click';
 
 function Index() {
     const $submitButton = document.querySelector("#submit-button")
+    const $exampleFormControlSelect1 = document.querySelector("#exampleFormControlSelect1");
 
     const onSearchKeyword = event => {
         event.preventDefault()
         const $comments = document.querySelector("#comments")
         const keyword = document.querySelector("#keyword").value
 
-        api.search.getComments(keyword)
+        const search = {
+            keyword : keyword,
+            RepoName : $exampleFormControlSelect1.value
+        }
+
+        api.search.getComments(search)
             .then(comments => {
                 $comments.innerHTML = comments.map(({login, content, htmlUrl}) => {
                     marked.setOptions({
@@ -27,12 +33,22 @@ function Index() {
             })
     }
 
+    const showRepoNames = () => {
+        api.repos.getRepoNames().then(
+            repos => {
+                repos.map(repoName => {
+                    $exampleFormControlSelect1.options.add(new Option(repoName));
+                })
+            })
+    }
+
     const initEventListener = () => {
         $submitButton.addEventListener(CLICK, onSearchKeyword)
     }
 
     this.init = () => {
         initEventListener();
+        showRepoNames();
     }
 }
 

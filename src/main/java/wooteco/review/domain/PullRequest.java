@@ -42,4 +42,8 @@ public class PullRequest {
 	public PullRequest withComments(final Set<Comment> comments) {
 		return new PullRequest(id, this.number, this.updatedAt, state, comments);
 	}
+
+	public Set<Comment> getComments() {
+		return comments;
+	}
 }
