@@ -8,15 +8,15 @@ public class KeywordDto {
 	@NotNull
 	private String keyword;
 	@NotNull
-	private String RepoName;
+	private String repoName;
 
 	public KeywordDto(final String keyword, final String repoName) {
 		this.keyword = keyword;
-		RepoName = repoName;
+		this.repoName = repoName;
 	}
 
 	public Keyword toKeyword() {
-		return new Keyword(keyword);
+		return new Keyword(keyword, repoName);
 	}
 
 	public String getKeyword() {

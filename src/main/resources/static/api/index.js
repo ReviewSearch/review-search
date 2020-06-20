@@ -11,6 +11,8 @@ const api = (() => {
 
     const search = {
         getComments({keyword, repoName}) {
+            console.log(keyword);
+            console.log(repoName);
             return requestWithJsonData(`/api/comments?keyword=${keyword}&repoName=${repoName}`)
         }
     }

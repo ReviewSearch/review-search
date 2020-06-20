@@ -14,7 +14,7 @@ function Index() {
 
         const search = {
             keyword : keyword,
-            RepoName : $exampleFormControlSelect1.value
+            repoName : $exampleFormControlSelect1.value
         }
 
         api.search.getComments(search)

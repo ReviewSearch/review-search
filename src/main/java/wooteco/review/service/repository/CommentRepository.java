@@ -17,6 +17,6 @@ public interface CommentRepository extends CrudRepository<Comment, Long> {
 		+ "JOIN REPOSITORY c ON b.github_repo = c.id "
 		+ "WHERE "
 		+ "c.id = :repoId AND "
-		+ "a.content LIKE '%'||:keyword||'%'")
+		+ "a.content LIKE CONCAT('%',:keyword,'%')")
 	List<Comment> findByContentContainingByRepoId(@Param("repoId") Long RepoId, @Param("keyword") String keyword);
 }
