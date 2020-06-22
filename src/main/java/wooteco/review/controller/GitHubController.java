@@ -55,7 +55,7 @@ public class GitHubController {
 		final GithubRepo persistenceRepo = repoService.createRepo(githubRepo.withPullRequests(pullRequests));
 
 		return ResponseEntity
-			.created(URI.create("/repos/" + persistenceRepo.getId()))
+			.created(URI.create("/api/github/repos/" + persistenceRepo.getId()))
 			.build();
 	}
 
