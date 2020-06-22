@@ -1,17 +1,16 @@
 import api from "../api/index.js"
 import { commentTemplate } from "../utils/templates.js";
-
-const CLICK = 'click';
+import { EVENT_TYPE } from "../utils/contants.js";
 
 function Index() {
     const $submitButton = document.querySelector("#submit-button")
 
-    const onSearchKeyword = event => {
+    const onClick = event => {
         event.preventDefault()
         const $comments = document.querySelector("#comments")
         const keyword = document.querySelector("#keyword").value
 
-        api.search.getComments(keyword)
+        api.comment.getComments(keyword)
             .then(comments => {
                 $comments.innerHTML = comments.map(({login, content, htmlUrl}) => {
                     marked.setOptions({
@@ -28,7 +27,7 @@ function Index() {
     }
 
     const initEventListener = () => {
-        $submitButton.addEventListener(CLICK, onSearchKeyword)
+        $submitButton.addEventListener(EVENT_TYPE.CLICK, onClick)
     }
 
     this.init = () => {
