@@ -1,22 +1,35 @@
 const METHOD = {
-    GET() {
+    POST(data) {
         return {
-            method: 'GET',
+            method:'POST',
+            body: data
         }
     }
 }
 
 const api = (() => {
-    const requestWithJsonData = (uri, config) => fetch(uri, config).then(data => data.json())
+    const requestWithJsonData = (uri, config) => fetch(uri, config).then(response => response.json());
+    const repo = {
+        createRepo(repoName) {
+            const data = {
+                name: repoName
+            }
+            return requestWithJsonData(`/api/github/repos`, METHOD.POST(data));
+        },
+            getRepoNames() {
+                return requestWithJsonData('api/github/repo-names')
+            }
+        }
+
 
     const search = {
-        getComments(keyword) {
-            return requestWithJsonData(`/api/comments?keyword=${keyword}`)
+        getComments({keyword, repoName}) {
+            return requestWithJsonData(`/api/comments?keyword=${keyword}&repoName=${repoName}`)
         }
     }
 
     return {
-        search
+        repo, search,
     }
 })()
 

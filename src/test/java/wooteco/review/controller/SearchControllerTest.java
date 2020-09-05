@@ -16,8 +16,8 @@ import io.restassured.RestAssured;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+// @formatter:off
 class SearchControllerTest {
-	// @formatter:off
 
 	@LocalServerPort
 	int port;
@@ -31,6 +31,7 @@ class SearchControllerTest {
 	void searchCommentsBy() {
 		given()
 			.queryParam("keyword", "인터페이스")
+			.queryParam("repoName", "ALL")
 			.contentType(MediaType.APPLICATION_JSON_VALUE)
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.when()

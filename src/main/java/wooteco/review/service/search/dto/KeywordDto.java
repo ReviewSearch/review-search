@@ -7,13 +7,16 @@ import wooteco.review.domain.Keyword;
 public class KeywordDto {
 	@NotNull
 	private String keyword;
+	@NotNull
+	private String repoName;
 
-	public KeywordDto(final String keyword) {
+	public KeywordDto(final String keyword, final String repoName) {
 		this.keyword = keyword;
+		this.repoName = repoName;
 	}
 
 	public Keyword toKeyword() {
-		return new Keyword(keyword);
+		return new Keyword(keyword, repoName);
 	}
 
 	public String getKeyword() {
