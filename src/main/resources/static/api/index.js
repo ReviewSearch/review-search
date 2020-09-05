@@ -1,18 +1,22 @@
 const METHOD = {
-    GET() {
+    POST(data) {
         return {
-            method: 'GET',
+            method:'POST',
+            body: data
         }
     }
 }
 
 const api = (() => {
-    const requestWithJsonData = (uri, config) => fetch(uri, config).then(data => data.json())
-
+    const requestWithJsonData = (uri, config) => fetch(uri, config).then(response => response.json());
+    const repo = {
+        createRepo(repoName) {
+            const data = {
+                name: repoName
+            }
+            return requestWithJsonData(`/api/github/repos`, METHOD.POST(data));
     const search = {
         getComments({keyword, repoName}) {
-            console.log(keyword);
-            console.log(repoName);
             return requestWithJsonData(`/api/comments?keyword=${keyword}&repoName=${repoName}`)
         }
     }
@@ -24,6 +28,7 @@ const api = (() => {
     }
 
     return {
+        comment, repo,
         search,
         repos
     }

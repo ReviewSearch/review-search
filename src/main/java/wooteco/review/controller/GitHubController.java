@@ -53,10 +53,10 @@ public class GitHubController {
 		}
 
 		final GithubRepo githubRepo = GithubRepo.of(name);
-		final GithubRepo persistanceRepo = repoService.createRepo(githubRepo.withPullRequests(pullRequests));
+		final GithubRepo persistenceRepo = repoService.createRepo(githubRepo.withPullRequests(pullRequests));
 
 		return ResponseEntity
-			.created(URI.create("/repos/" + persistanceRepo.getId()))
+			.created(URI.create("/api/github/repos/" + persistenceRepo.getId()))
 			.build();
 	}
 

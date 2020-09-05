@@ -14,4 +14,9 @@ public class PageController {
 	public String index() {
 		return "index";
 	}
+
+	@GetMapping(value = "/admin", produces = MediaType.TEXT_HTML_VALUE)
+	public String admin() {
+		return "admin";
+	}
 }
