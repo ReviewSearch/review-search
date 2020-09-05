@@ -15,22 +15,21 @@ const api = (() => {
                 name: repoName
             }
             return requestWithJsonData(`/api/github/repos`, METHOD.POST(data));
+        },
+            getRepoNames() {
+                return requestWithJsonData('api/github/repo-names')
+            }
+        }
+
+
     const search = {
         getComments({keyword, repoName}) {
             return requestWithJsonData(`/api/comments?keyword=${keyword}&repoName=${repoName}`)
         }
     }
 
-    const repos = {
-        getRepoNames() {
-            return requestWithJsonData('api/github/repo-names')
-        }
-    }
-
     return {
-        comment, repo,
-        search,
-        repos
+        repo, search,
     }
 })()
 
