@@ -1,3 +1,3 @@
 ## 🏛 Architecture
 
-![ReviewSearch_Architecture](https://user-images.githubusercontent.com/40536197/92325069-a1d92a00-f082-11ea-86e5-fc64f4295b36.png)
+![ReviewSearch_Architecture](https://user-images.githubusercontent.com/40536197/92328223-0c499480-f09a-11ea-8d89-8d69674cd462.png)
